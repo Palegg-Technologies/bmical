@@ -1,5 +1,4 @@
 import 'package:bmical/util.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bmical/input_page/summary.dart';
@@ -11,8 +10,14 @@ import 'package:lottie/lottie.dart';
 class Person {
   double height = 0, weight = 0;
   int gender = 0;
-  _flipWeightUnit(){}
-  _flipHeightUnit(){}
+
+  void _flipGender() {
+    gender = 1 - gender;
+  }
+
+  void _flipWeightUnit() {}
+
+  void _flipHeightUnit() {}
 }
 
 class InputPage extends StatefulWidget {
@@ -66,7 +71,7 @@ class _InputPageState extends State<InputPage>
   void _flipMode() {
     _mode = 1 - _mode;
     SystemChrome.setSystemUIOverlayStyle(_sosModes[_mode]);
-    _mode==1 ? _controller.forward(): _controller.reverse();
+    _mode == 1 ? _controller.forward() : _controller.reverse();
     setState(() {});
   }
 
@@ -83,8 +88,7 @@ class _InputPageState extends State<InputPage>
             onPressed: () => _flipMode(),
             child: SizedBox(
               height: _size.height / 20,
-              child:
-              LottieBuilder.asset(
+              child: LottieBuilder.asset(
                 "images/data.json",
                 controller: _controller,
               ),
@@ -103,16 +107,11 @@ class _InputPageState extends State<InputPage>
     'sGrad2': [Color(0xFF0072ff), Color(0xffff008f)],
   };
 
-  void _flipGender() {
-    setState(() {
-      _person.gender = 1 - _person.gender;
-    });
-  }
-
   @override
   void initState() {
     _person = Person();
-    _controller = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 1));
     super.initState();
   }
 
@@ -136,17 +135,16 @@ class _InputPageState extends State<InputPage>
     Size _size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: myAppbar(_size),
-      backgroundColor: _mode==1?_gsColors['BG'][_person.gender]:Colors.white,
+      backgroundColor:
+          _mode == 1 ? _gsColors['BG'][_person.gender] : Colors.white,
       body: Column(
         children: <Widget>[
           SizedBox(height: _size.height / 40),
           InputSummary(
             gender: genders[_person.gender],
-            height: _person.height,
-            weight: _person.weight,
+            person: _person,
           ),
-          Card(),
-          SizedBox(height: _size.height / 80),
+          SizedBox(height: _size.height / 120),
           _iconRow(_iconList.sublist(0, 2), _size.width),
           SizedBox(
             height: _size.height / 1.65,
@@ -187,7 +185,9 @@ class _InputPageState extends State<InputPage>
                             height: _size.height / 1.8,
                             minWidth: _size.width / 1.875,
                             child: FlatButton(
-                              onPressed: () => _flipGender(),
+                              onPressed: () => setState(() {
+                                _person._flipGender();
+                              }),
                               child: Container(
                                 height: _person.height * 400,
                                 width: _person.weight * 160,
@@ -223,33 +223,36 @@ class _InputPageState extends State<InputPage>
             ),
           ),
           _iconRow(_iconList.sublist(2), _size.width),
-          SizedBox(
-            height: _size.height / 50,
-          ),
           Hero(
             tag: '1',
-            child: RawMaterialButton(
-              onPressed: () => _goToResultPage(_modes[_mode]),
-              fillColor: _modes[_mode],
-              elevation: 2.0,
-              child: Column(
-                children: [
-                  Icon(
-                    Icons.arrow_upward,
-                    color: Colors.white,
+            child: ClipRect(
+              child: Align(
+                alignment: Alignment.topCenter,
+                heightFactor: 0.5,
+                child: RawMaterialButton(
+                  onPressed: () => _goToResultPage(_modes[_mode]),
+                  fillColor: _modes[_mode],
+                  elevation: 2.0,
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.arrow_upward,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        'BMI',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 24,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'BMI',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 24,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ],
+                  padding: EdgeInsets.fromLTRB(80.0, 10.0, 80.0, 69.2),
+                  shape: CircleBorder(),
+                ),
               ),
-              padding: EdgeInsets.fromLTRB(80.0, 10.0, 80.0, 80.0),
-              shape: CircleBorder(),
             ),
           ),
         ],

@@ -32,6 +32,8 @@ class CustomSliderThumbRect extends SliderComponentShape {
         SliderThemeData sliderTheme,
         TextDirection textDirection,
         double value,
+        Size sizeWithOverflow,
+        double textScaleFactor
       }) {
     final Canvas canvas = context.canvas;
 

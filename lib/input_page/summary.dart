@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class InputSummary extends StatelessWidget {
   final gender;
-  final double weight, height;
+  final person;
 
-  const InputSummary({Key key, this.gender, this.height, this.weight})
+  const InputSummary({Key key, this.gender, this.person})
       : super(key: key);
 
   int getValue(int max, double value) {
@@ -46,15 +46,15 @@ class InputSummary extends StatelessWidget {
           children: <Widget>[
             Expanded(
                 child: FlatButton(
-                    onPressed: _flipWeightUnit(),
-                    child: _text("${getValue(142, weight)} ${WUnit}"))),
+                    onPressed: ()=>print("weight flip"),
+                    child: _text("${getValue(142, person.weight)}"))),
             _divider(),
             Expanded(child: _text("$gender")),
             _divider(),
             Expanded(
                 child: FlatButton(
-                    onPressed: _flipHeightUnit(),
-                    child: _text("${getValue(211, height)} ${HUnit}"))),
+                    onPressed: ()=>print("height flip"),
+                    child: _text("${getValue(211, person.height)}"))),
           ],
         ),
       ),
