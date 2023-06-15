@@ -150,7 +150,7 @@ class _InputPageState extends State<InputPage>
           SizedBox(height: size.height / 120),
           _iconRow(_iconList.sublist(0, 2), size.width),
           SizedBox(
-            height: size.height / 1.65,
+            height: size.height / 1.6,
             width: size.width,
             child: Stack(
               children: <Widget>[
@@ -232,32 +232,30 @@ class _InputPageState extends State<InputPage>
           _iconRow(_iconList.sublist(2), size.width),
           Hero(
             tag: '1',
-            child: ClipRect(
-              child: Align(
-                alignment: Alignment.topCenter,
-                heightFactor: 0.5,
-                child: RawMaterialButton(
-                  onPressed: () => _goToResultPage(_modes[_mode]),
-                  fillColor: _modes[_mode],
-                  elevation: 2.0,
-                  padding: const EdgeInsets.fromLTRB(80.0, 10.0, 80.0, 69.2),
-                  shape: const CircleBorder(),
-                  child: const Column(
-                    children: [
-                      Icon(
-                        Icons.arrow_upward,
-                        color: Colors.white,
+            child: Align(
+              alignment: Alignment.topCenter,
+              heightFactor: 0.5,
+              child: RawMaterialButton(
+                onPressed: () => _goToResultPage(_modes[_mode]),
+                fillColor: _modes[_mode],
+                elevation: 2.0,
+                padding: const EdgeInsets.fromLTRB(80.0, 10.0, 80.0, 69.2),
+                shape: const CircleBorder(),
+                child: const Column(
+                  children: [
+                    Icon(
+                      Icons.arrow_upward,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      'BMI',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 24,
+                        color: Colors.white70,
                       ),
-                      Text(
-                        'BMI',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 24,
-                          color: Colors.white70,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
