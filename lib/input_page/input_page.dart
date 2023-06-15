@@ -51,7 +51,10 @@ class _InputPageState extends State<InputPage>
   List<String> genders = ["Male", "Female"];
   final List<String> _gsPics = ["images/person.png", "images/woman.png"];
   int _mode = 0;
-  static final List<Color> _modes = [const Color(0xffffdd13), const Color(0xff672af4)];
+  static final List<Color> _modes = [
+    const Color(0xffffdd13),
+    const Color(0xff672af4)
+  ];
   final List<SystemUiOverlayStyle> _sosModes = [
     SystemUiOverlayStyle(
       statusBarColor: _modes[0],
@@ -125,7 +128,8 @@ class _InputPageState extends State<InputPage>
       builder: (context) => ResultPage(
         person: _person,
         color: color,
-      ), settings: const RouteSettings(),
+      ),
+      settings: const RouteSettings(),
     ));
   }
 
@@ -180,19 +184,23 @@ class _InputPageState extends State<InputPage>
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 6.0, vertical: 6.0),
-                          child: ButtonTheme(
-                            height: size.height / 1.8,
-                            minWidth: size.width / 1.875,
-                            child: TextButton(
-                              onPressed: () => setState(() {
-                                _person._flipGender();
-                              }),
-                              child: SizedBox(
-                                height: _person.height * 400,
-                                width: _person.weight * 160,
-                                child: Image.asset(
-                                  _gsPics[_person.gender],
-                                  fit: BoxFit.fill,
+                          child: SizedBox(
+                            height: size.height / 1.75,
+                            width: size.width / 1.75,
+                            child: ButtonTheme(
+                              height: size.height / 1.8,
+                              minWidth: size.width / 1.875,
+                              child: TextButton(
+                                onPressed: () => setState(() {
+                                  _person._flipGender();
+                                }),
+                                child: SizedBox(
+                                  height: _person.height * 400,
+                                  width: _person.weight * 160,
+                                  child: Image.asset(
+                                    _gsPics[_person.gender],
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
                             ),
