@@ -6,7 +6,7 @@ int getValue(int max, double value) {
 }
 
 class FadeRoute<T> extends MaterialPageRoute<T> {
-  FadeRoute({WidgetBuilder builder, RouteSettings settings})
+  FadeRoute({required WidgetBuilder builder, required RouteSettings settings})
       : super(builder: builder, settings: settings);
 
   @override
@@ -19,12 +19,12 @@ class FadeRoute<T> extends MaterialPageRoute<T> {
   }
 }
 
-double calculateBMI({int height, int weight}) =>
+num calculateBMI({required int height, required int weight}) =>
     weight / _heightSquared(height);
 
-double calculateMinNormalWeight({int height}) => 18.5 * _heightSquared(height);
+num calculateMinNormalWeight({required int height}) => 18.5 * _heightSquared(height);
 
-double calculateMaxNormalWeight({int height}) => 25 * _heightSquared(height);
+num calculateMaxNormalWeight({required int height}) => 25 * _heightSquared(height);
 
-double _heightSquared(int height) => math.pow(height / 100, 2);
+num _heightSquared(int height) => math.pow(height / 100, 2);
 

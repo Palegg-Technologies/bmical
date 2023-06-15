@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:bmical/util.dart';
 
 class CustomSliderThumbRect extends SliderComponentShape {
@@ -8,11 +7,11 @@ class CustomSliderThumbRect extends SliderComponentShape {
   final int min, max, rotation;
 
   const CustomSliderThumbRect({
-    this.thumbRadius,
+    required this.thumbRadius,
     this.thumbHeight,
-    this.min,
-    this.max,
-    this.rotation,
+    required this.min,
+    required this.max,
+    required this.rotation,
   });
 
   @override
@@ -24,16 +23,16 @@ class CustomSliderThumbRect extends SliderComponentShape {
   void paint(
       PaintingContext context,
       Offset center, {
-        Animation<double> activationAnimation,
-        Animation<double> enableAnimation,
-        bool isDiscrete,
-        TextPainter labelPainter,
-        RenderBox parentBox,
-        SliderThemeData sliderTheme,
-        TextDirection textDirection,
-        double value,
-        Size sizeWithOverflow,
-        double textScaleFactor
+        Animation<double>? activationAnimation,
+        Animation<double>? enableAnimation,
+        bool? isDiscrete,
+        TextPainter? labelPainter,
+        RenderBox? parentBox,
+        SliderThemeData? sliderTheme,
+        TextDirection? textDirection,
+        double? value,
+        Size? sizeWithOverflow,
+        double? textScaleFactor
       }) {
     final Canvas canvas = context.canvas;
 
@@ -47,14 +46,14 @@ class CustomSliderThumbRect extends SliderComponentShape {
       ..color = Colors.white
       ..style = PaintingStyle.fill;
 
-    TextSpan span = new TextSpan(
-        style: new TextStyle(
+    TextSpan span = TextSpan(
+        style: TextStyle(
             fontSize: thumbHeight * .3,
             fontWeight: FontWeight.w700,
-            color: sliderTheme.thumbColor,
+            color: sliderTheme?.thumbColor,
             height: 0.9),
-        text: '${getValue(max, value)}');
-    TextPainter tp = new TextPainter(
+        text: '${getValue(max, value!)}');
+    TextPainter tp = TextPainter(
         text: span,
         textAlign: TextAlign.left,
         textDirection: TextDirection.rtl);
@@ -76,7 +75,7 @@ class SliderWidget extends StatefulWidget {
   SliderWidget(
       {this.sliderHeight = 42,
         this.person,
-        this.type,
+        required this.type,
         this.min = 0,
         this.onChange,
         this.fullWidth = false,

@@ -2,7 +2,6 @@ import 'package:bmical/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bmical/input_page/summary.dart';
-import 'package:flutter/widgets.dart';
 import 'package:bmical/input_page/slider.dart';
 import 'package:bmical/result_page/result_page.dart';
 import 'package:lottie/lottie.dart';
@@ -27,33 +26,33 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Person _person;
+  late AnimationController _controller;
+  late Person _person;
   int sliderHeight = 40, min = 0, max = 211;
   double paddingFactor = .2;
-  List<ImageIcon> _iconList = [
-    ImageIcon(
+  final List<ImageIcon> _iconList = [
+    const ImageIcon(
       AssetImage("images/feather.png"),
       color: Colors.white,
     ),
-    ImageIcon(
+    const ImageIcon(
       AssetImage("images/giraffe.png"),
       color: Colors.white,
     ),
-    ImageIcon(
+    const ImageIcon(
       AssetImage("images/elephant.png"),
       color: Colors.white,
     ),
-    ImageIcon(
+    const ImageIcon(
       AssetImage("images/rabbit.png"),
       color: Colors.white,
     ),
   ];
   List<String> genders = ["Male", "Female"];
-  List<String> _gsPics = ["images/person.png", "images/woman.png"];
+  final List<String> _gsPics = ["images/person.png", "images/woman.png"];
   int _mode = 0;
-  static List<Color> _modes = [Color(0xffffdd13), Color(0xff672af4)];
-  List<SystemUiOverlayStyle> _sosModes = [
+  static final List<Color> _modes = [const Color(0xffffdd13), const Color(0xff672af4)];
+  final List<SystemUiOverlayStyle> _sosModes = [
     SystemUiOverlayStyle(
       statusBarColor: _modes[0],
       statusBarIconBrightness: Brightness.dark,
@@ -75,19 +74,20 @@ class _InputPageState extends State<InputPage>
     setState(() {});
   }
 
-  PreferredSize myAppbar(Size _size) {
+  PreferredSize myAppbar(Size size) {
     return PreferredSize(
+      preferredSize: size / 12,
       child: AppBar(
-        title: Text(
+        title: const Text(
           'BMI',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: _modes[_mode],
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: () => _flipMode(),
             child: SizedBox(
-              height: _size.height / 20,
+              height: size.height / 20,
               child: LottieBuilder.asset(
                 "images/data.json",
                 controller: _controller,
@@ -96,22 +96,21 @@ class _InputPageState extends State<InputPage>
           ),
         ],
       ),
-      preferredSize: _size / 12,
     );
   }
 
-  Map<String, List<Color>> _gsColors = {
-    'BG': [Color(0x7f003f6f), Color(0x7f850056)],
-    'main': [Color(0xff2198f3), Color(0xfff713a7)],
-    'sGrad1': [Color(0xFF00c6ff), Color(0xffff00ff)],
-    'sGrad2': [Color(0xFF0072ff), Color(0xffff008f)],
+  final Map<String, List<Color>> _gsColors = {
+    'BG': [const Color(0x7f003f6f), const Color(0x7f850056)],
+    'main': [const Color(0xff2198f3), const Color(0xfff713a7)],
+    'sGrad1': [const Color(0xFF00c6ff), const Color(0xffff00ff)],
+    'sGrad2': [const Color(0xFF0072ff), const Color(0xffff008f)],
   };
 
   @override
   void initState() {
     _person = Person();
     _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 1));
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
     super.initState();
   }
 
@@ -126,34 +125,34 @@ class _InputPageState extends State<InputPage>
       builder: (context) => ResultPage(
         person: _person,
         color: color,
-      ),
+      ), settings: const RouteSettings(),
     ));
   }
 
   @override
   Widget build(BuildContext context) {
-    Size _size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: myAppbar(_size),
+      appBar: myAppbar(size),
       backgroundColor:
-          _mode == 1 ? _gsColors['BG'][_person.gender] : Colors.white,
+          _mode == 1 ? _gsColors['BG']![_person.gender] : Colors.white,
       body: Column(
         children: <Widget>[
-          SizedBox(height: _size.height / 40),
+          SizedBox(height: size.height / 40),
           InputSummary(
             gender: genders[_person.gender],
             person: _person,
           ),
-          SizedBox(height: _size.height / 120),
-          _iconRow(_iconList.sublist(0, 2), _size.width),
+          SizedBox(height: size.height / 120),
+          _iconRow(_iconList.sublist(0, 2), size.width),
           SizedBox(
-            height: _size.height / 1.65,
-            width: _size.width,
+            height: size.height / 1.65,
+            width: size.width,
             child: Stack(
               children: <Widget>[
                 Positioned(
-                  left: _size.width / 30,
-                  top: _size.height / 90,
+                  left: size.width / 30,
+                  top: size.height / 90,
                   child: Row(
                     children: [
                       RotatedBox(
@@ -167,28 +166,28 @@ class _InputPageState extends State<InputPage>
                             });
                           },
                           sColors: [
-                            _gsColors['sGrad1'][_person.gender],
-                            _gsColors['sGrad2'][_person.gender]
+                            _gsColors['sGrad1']![_person.gender],
+                            _gsColors['sGrad2']![_person.gender]
                           ],
                         ),
                       ),
                       Card(
-                        color: _gsColors['main'][_person.gender],
+                        color: _gsColors['main']![_person.gender],
                         margin:
-                            EdgeInsets.symmetric(horizontal: _size.width / 16),
+                            EdgeInsets.symmetric(horizontal: size.width / 16),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 6.0, vertical: 6.0),
                           child: ButtonTheme(
-                            height: _size.height / 1.8,
-                            minWidth: _size.width / 1.875,
-                            child: FlatButton(
+                            height: size.height / 1.8,
+                            minWidth: size.width / 1.875,
+                            child: TextButton(
                               onPressed: () => setState(() {
                                 _person._flipGender();
                               }),
-                              child: Container(
+                              child: SizedBox(
                                 height: _person.height * 400,
                                 width: _person.weight * 160,
                                 child: Image.asset(
@@ -211,8 +210,8 @@ class _InputPageState extends State<InputPage>
                             });
                           },
                           sColors: [
-                            _gsColors['sGrad1'][_person.gender],
-                            _gsColors['sGrad2'][_person.gender]
+                            _gsColors['sGrad1']![_person.gender],
+                            _gsColors['sGrad2']![_person.gender]
                           ],
                         ),
                       ),
@@ -222,7 +221,7 @@ class _InputPageState extends State<InputPage>
               ],
             ),
           ),
-          _iconRow(_iconList.sublist(2), _size.width),
+          _iconRow(_iconList.sublist(2), size.width),
           Hero(
             tag: '1',
             child: ClipRect(
@@ -233,7 +232,9 @@ class _InputPageState extends State<InputPage>
                   onPressed: () => _goToResultPage(_modes[_mode]),
                   fillColor: _modes[_mode],
                   elevation: 2.0,
-                  child: Column(
+                  padding: const EdgeInsets.fromLTRB(80.0, 10.0, 80.0, 69.2),
+                  shape: const CircleBorder(),
+                  child: const Column(
                     children: [
                       Icon(
                         Icons.arrow_upward,
@@ -249,8 +250,6 @@ class _InputPageState extends State<InputPage>
                       ),
                     ],
                   ),
-                  padding: EdgeInsets.fromLTRB(80.0, 10.0, 80.0, 69.2),
-                  shape: CircleBorder(),
                 ),
               ),
             ),

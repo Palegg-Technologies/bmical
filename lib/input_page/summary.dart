@@ -4,7 +4,7 @@ class InputSummary extends StatelessWidget {
   final gender;
   final person;
 
-  const InputSummary({Key key, this.gender, this.person})
+  const InputSummary({Key? key, this.gender, this.person})
       : super(key: key);
 
   int getValue(int max, double value) {
@@ -14,7 +14,7 @@ class InputSummary extends StatelessWidget {
   Widget _text(String text) {
     return Text(
       text,
-      style: TextStyle(
+      style: const TextStyle(
         color: Color.fromRGBO(143, 144, 156, 1.0),
         fontSize: 15.0,
       ),
@@ -45,14 +45,14 @@ class InputSummary extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Expanded(
-                child: FlatButton(
+                child: TextButton(
                     onPressed: ()=>print("weight flip"),
                     child: _text("${getValue(142, person.weight)}"))),
             _divider(),
             Expanded(child: _text("$gender")),
             _divider(),
             Expanded(
-                child: FlatButton(
+                child: TextButton(
                     onPressed: ()=>print("height flip"),
                     child: _text("${getValue(211, person.height)}"))),
           ],

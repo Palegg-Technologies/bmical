@@ -3,36 +3,36 @@ import 'package:bmical/util.dart';
 
 class ResultPage extends StatefulWidget {
   final person, color;
-  const ResultPage({Key key, this.person, this.color}) : super(key: key);
+  const ResultPage({Key? key, this.person, this.color}) : super(key: key);
 
   @override
   _ResultPageState createState() => _ResultPageState();
 }
 
 class _ResultPageState extends State<ResultPage> {
-  PreferredSize myAppbar(Size _size) {
+  PreferredSize myAppbar(Size size) {
     return PreferredSize(
+      preferredSize: size / 12,
       child: AppBar(
-        title: Text(
+        title: const Text(
           'BMI',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: this.widget.color,
+        backgroundColor: widget.color,
       ),
-      preferredSize: _size / 12,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    Size _size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     int height = getValue(211, widget.person.height),
         weight = getValue(142, widget.person.weight);
     return Hero(
       tag: '1',
       child: Scaffold(
-        backgroundColor: this.widget.color,
-        appBar: myAppbar(_size),
+        backgroundColor: widget.color,
+        appBar: myAppbar(size),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -41,7 +41,7 @@ class _ResultPageState extends State<ResultPage> {
               minWeight: calculateMinNormalWeight(height: height),
               maxWeight: calculateMaxNormalWeight(height: height),
             ),
-            _buildBottomBar(this.widget.person.gender == 0? Color(0xff2198f3) : Color(0xfff713a7)),
+            _buildBottomBar(widget.person.gender == 0? const Color(0xff2198f3) : const Color(0xfff713a7)),
           ],
         ),
       ),
@@ -58,7 +58,7 @@ class _ResultPageState extends State<ResultPage> {
           Padding(
             padding: const EdgeInsets.only(right: 40.0),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.delete,
                 color: Colors.white70,
                 size: 28.0,
@@ -66,25 +66,27 @@ class _ResultPageState extends State<ResultPage> {
               onPressed: () => Navigator.of(context).pop(),
             ),
           ),
-          Container(
+          SizedBox(
               height: 52.0,
               width: 80.0,
-              child: RaisedButton(
-                child: Icon(
+              child: ElevatedButton(
+                style: OutlinedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  foregroundColor: color
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Icon(
                   Icons.refresh,
                   color: Colors.white,
                   size: 28.0,
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-                onPressed: () => Navigator.of(context).pop(),
-                color: color,
               )),
           Padding(
             padding: const EdgeInsets.only(left: 40.0),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.share,
                 color: Colors.white70,
                 size: 28.0,
@@ -99,13 +101,13 @@ class _ResultPageState extends State<ResultPage> {
 }
 
 class ResultCard extends StatelessWidget {
-  final double bmi;
-  final double minWeight;
-  final double maxWeight;
+  final num bmi;
+  final num minWeight;
+  final num maxWeight;
 
-  ResultCard({Key key, this.bmi, this.minWeight, this.maxWeight})
+  ResultCard({Key? key, required this.bmi, required this.minWeight, required this.maxWeight})
       : super(key: key);
-  Color cardColor;
+  Color? cardColor;
   @override
   Widget build(BuildContext context) {
     String _indicator(bmi) {
